@@ -5,6 +5,7 @@
 #define MAX_USERS 10
 #define MAX_RECORDS 100
 #define MAX_CATEGORIES 5
+
 void clear_screen() {
     #ifdef _WIN32
         system("cls");
@@ -12,6 +13,7 @@ void clear_screen() {
         system("clear");
     #endif
 }
+
 void start(){
     // clear_screen();
 	printf("\n\n\n\n");
@@ -40,6 +42,7 @@ typedef struct {
     char category[50];
     char description[100];
     float amount;
+    char username[50];  // New field to store the username associated with the record
 } Record;
 
 typedef struct {
@@ -51,8 +54,8 @@ User users[MAX_USERS];
 Record records[MAX_RECORDS];
 int record_count = 0;
 int user_count = 0;
-int record_it = 0;
-int record_end = 0;
+int authenticated = 0;
+char logged_in_user[50];  // Store the username of the logged-in user
 
 void load_users();
 void save_users();
@@ -72,7 +75,7 @@ int main() {
     load_users();
     load_records();
     authenticate_user();
-    while(1)
+    while(authenticated)
     {
         menu();
     }
@@ -101,7 +104,7 @@ void save_users() {
 void load_records() {
     FILE *file = fopen("records.dat", "r");
     if (file != NULL) {
-        while (fscanf(file, "%s %s %f", records[record_count].category, records[record_count].description, &records[record_count].amount) != EOF) {
+        while (fscanf(file, "%s\t%[^\t]\t%f\t%s", records[record_count].category, records[record_count].description, &records[record_count].amount, records[record_count].username) != EOF) {
             record_count++;
         }
         fclose(file);
@@ -111,10 +114,11 @@ void load_records() {
 void save_records() {
     FILE *file = fopen("records.dat", "w");
     for (int i = 0; i < record_count; i++) {
-        fprintf(file, "%s %s %.2f\n", records[i].category, records[i].description, records[i].amount);
+        fprintf(file, "%s\t%s\t%.2f\t%s\n", records[i].category, records[i].description, records[i].amount, records[i].username);
     }
     fclose(file);
 }
+
 void register_user() {
     if (user_count >= MAX_USERS) {
         printf("User limit reached.\n");
@@ -163,9 +167,9 @@ void authenticate_user() {
 
     for (int i = 0; i < user_count; i++) {
         if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password) == 0) {
-            record_it = i;
-            record_end = i;
+            strcpy(logged_in_user, username);  // Store the logged-in user's username
             menu();
+            authenticated = 1;
             return;
         }
     }
@@ -185,31 +189,31 @@ void add_record() {
         printf("Record limit reached.\n");
         return;
     }
-    if(record_end == record_it)
-    {
-        record_end--;
-    }
     printf("Enter category: ");
-    scanf("%s", records[record_count].category);
+    getchar(); // Consume newline left over by previous input
+    fgets(records[record_count].category, sizeof(records[record_count].category), stdin);
+    records[record_count].category[strcspn(records[record_count].category, "\n")] = 0;  // Remove newline
+
     printf("Enter description: ");
-    scanf(" %[^\n]", records[record_count].description);
+    fgets(records[record_count].description, sizeof(records[record_count].description), stdin);
+    records[record_count].description[strcspn(records[record_count].description, "\n")] = 0;  // Remove newline
+
     printf("Enter amount: ");
     scanf("%f", &records[record_count].amount);
-
-    record_end++;
+    strcpy(records[record_count].username, logged_in_user);  // Assign the logged-in user to the record
 
     record_count++;
     save_records();
     printf("Record added successfully.\n");
 }
-
 void update_record() {
     char description[100];
     printf("Enter the description of the record to update: ");
     scanf(" %[^\n]", description);
 
     for (int i = 0; i < record_count; i++) {
-        if (strcmp(records[i].description, description) == 0) {
+        // Check if the record belongs to the logged-in user and matches the description
+        if (strcmp(records[i].description, description) == 0 && strcmp(records[i].username, logged_in_user) == 0) {
             printf("Enter new category: ");
             scanf("%s", records[i].category);
             printf("Enter new description: ");
@@ -222,16 +226,16 @@ void update_record() {
             return;
         }
     }
-    printf("Record not found.\n");
+    printf("Record not found or does not belong to you.\n");
 }
-
 void delete_record() {
     char description[100];
     printf("Enter the description of the record to delete: ");
     scanf(" %[^\n]", description);
 
     for (int i = 0; i < record_count; i++) {
-        if (strcmp(records[i].description, description) == 0) {
+        // Check if the record belongs to the logged-in user and matches the description
+        if (strcmp(records[i].description, description) == 0 && strcmp(records[i].username, logged_in_user) == 0) {
             for (int j = i; j < record_count - 1; j++) {
                 records[j] = records[j + 1];
             }
@@ -241,20 +245,22 @@ void delete_record() {
             return;
         }
     }
-    printf("Record not found.\n");
+    printf("Record not found or does not belong to you.\n");
 }
-
 void view_records() {
-    printf("Records:\n");
-    if(records[record_it].category[0]!='\0')
-    {
-        for(int i = record_it ; i <= record_end ; i++)
-        printf("Category: %s, Description: %s, Amount: %.2f\n",
-        records[i].category, records[i].description, records[i].amount);
+    int found = 0;
+    printf("Your Records:\n");
+    
+    for (int i = 0; i < record_count; i++) {
+        if (strcmp(records[i].username, logged_in_user) == 0) {
+            printf("Category: %s, Description: %s, Amount: %.2f\n",
+                   records[i].category, records[i].description, records[i].amount);
+            found = 1;
+        }
     }
-    else
-    {
-        printf("No records found for the person..\n");
+    
+    if (!found) {
+        printf("No records found.\n");
     }
 }
 
@@ -302,6 +308,7 @@ void menu() {
     printf("4. View Records\n");
     printf("5. Find Best Budget\n");
     printf("6. Exit\n");
+    printf("7. Switch User\n");
     printf("Choose an option: ");
     scanf("%d", &choice);
 
@@ -323,7 +330,10 @@ void menu() {
             break;
         case 6:
             exit(0);
+        case 7:
+            authenticate_user();
         default:
             printf("Invalid choice.\n");
     }
 }
+
