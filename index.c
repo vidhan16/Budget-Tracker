@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define MAX_USERS 10
 #define MAX_RECORDS 100
@@ -15,26 +16,26 @@ void clear_screen() {
 }
 
 void start(){
-    // clear_screen();
+    clear_screen();
 	printf("\n\n\n\n");
-	printf("\t\t\t\t\t\t       _______   __    __  _______    ______   ________  ________     \n");
-	printf("\t\t\t\t\t\t      /       \\ /  |  /  |/       \\  /      \\ /        |/        |    \n");
-	printf("\t\t\t\t\t\t      $$$$$$$  |$$ |  $$ |$$$$$$$  |/$$$$$$  |$$$$$$$$/ $$$$$$$$/     \n");
-	printf("\t\t\t\t\t\t      $$ |__$$ |$$ |  $$ |$$ |  $$ |$$ | _$$/ $$ |__       $$ |       \n");
-	printf("\t\t\t\t\t\t      $$    $$< $$ |  $$ |$$ |  $$ |$$ |/    |$$    |      $$ |       \n");
-	printf("\t\t\t\t\t\t      $$$$$$$  |$$ |  $$ |$$ |  $$ |$$ |$$$$ |$$$$$/       $$ |       \n");
-	printf("\t\t\t\t\t\t      $$ |__$$ |$$ \\__$$ |$$ |__$$ |$$ \\__$$ |$$ |_____    $$ |       \n");
-	printf("\t\t\t\t\t\t      $$    $$/ $$    $$/ $$    $$/ $$    $$/ $$       |   $$ |       \n");
-	printf("\t\t\t\t\t\t      $$$$$$$/   $$$$$$/  $$$$$$$/   $$$$$$/  $$$$$$$$/    $$/        \n");
-	printf("\t\t\t\t\t\t ________  _______    ______    ______   __    __  ________  _______  \n");
-	printf("\t\t\t\t\t\t/        |/       \\  /      \\  /      \\ /  |  /  |/        |/       \\ \n");
-	printf("\t\t\t\t\t\t$$$$$$$$/ $$$$$$$  |/$$$$$$  |/$$$$$$  |$$ | /$$/ $$$$$$$$/ $$$$$$$  |\n");
-	printf("\t\t\t\t\t\t   $$ |   $$ |__$$ |$$ |__$$ |$$ |  $$/ $$ |/$$/  $$ |__    $$ |__$$ |\n");
-	printf("\t\t\t\t\t\t   $$ |   $$    $$< $$    $$ |$$ |      $$  $$<   $$    |   $$    $$< \n");
-	printf("\t\t\t\t\t\t   $$ |   $$$$$$$  |$$$$$$$$ |$$ |   __ $$$$$  \\  $$$$$/    $$$$$$$  |\n");
-	printf("\t\t\t\t\t\t   $$ |   $$ |  $$ |$$ |  $$ |$$ \\__/  |$$ |$$  \\ $$ |_____ $$ |  $$ |\n");
-	printf("\t\t\t\t\t\t   $$ |   $$ |  $$ |$$ |  $$ |$$    $$/ $$ | $$  |$$       |$$ |  $$ |\n");
-	printf("\t\t\t\t\t\t   $$/    $$/   $$/ $$/   $$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$/   $$/ \n");
+	printf("\t\t\t\t\t       _______   __    __  _______    ______   ________  ________     \n");
+	printf("\t\t\t\t\t      /       \\ /  |  /  |/       \\  /      \\ /        |/        |    \n");
+	printf("\t\t\t\t\t      $$$$$$$  |$$ |  $$ |$$$$$$$  |/$$$$$$  |$$$$$$$$/ $$$$$$$$/     \n");
+	printf("\t\t\t\t\t      $$ |__$$ |$$ |  $$ |$$ |  $$ |$$ | _$$/ $$ |__       $$ |       \n");
+	printf("\t\t\t\t\t      $$    $$< $$ |  $$ |$$ |  $$ |$$ |/    |$$    |      $$ |       \n");
+	printf("\t\t\t\t\t      $$$$$$$  |$$ |  $$ |$$ |  $$ |$$ |$$$$ |$$$$$/       $$ |       \n");
+	printf("\t\t\t\t\t      $$ |__$$ |$$ \\__$$ |$$ |__$$ |$$ \\__$$ |$$ |_____    $$ |       \n");
+	printf("\t\t\t\t\t      $$    $$/ $$    $$/ $$    $$/ $$    $$/ $$       |   $$ |       \n");
+	printf("\t\t\t\t\t      $$$$$$$/   $$$$$$/  $$$$$$$/   $$$$$$/  $$$$$$$$/    $$/        \n");
+	printf("\t\t\t\t\t ________  _______    ______    ______   __    __  ________  _______  \n");
+	printf("\t\t\t\t\t/        |/       \\  /      \\  /      \\ /  |  /  |/        |/       \\ \n");
+	printf("\t\t\t\t\t$$$$$$$$/ $$$$$$$  |/$$$$$$  |/$$$$$$  |$$ | /$$/ $$$$$$$$/ $$$$$$$  |\n");
+	printf("\t\t\t\t\t   $$ |   $$ |__$$ |$$ |__$$ |$$ |  $$/ $$ |/$$/  $$ |__    $$ |__$$ |\n");
+	printf("\t\t\t\t\t   $$ |   $$    $$< $$    $$ |$$ |      $$  $$<   $$    |   $$    $$< \n");
+	printf("\t\t\t\t\t   $$ |   $$$$$$$  |$$$$$$$$ |$$ |   __ $$$$$  \\  $$$$$/    $$$$$$$  |\n");
+	printf("\t\t\t\t\t   $$ |   $$ |  $$ |$$ |  $$ |$$ \\__/  |$$ |$$  \\ $$ |_____ $$ |  $$ |\n");
+	printf("\t\t\t\t\t   $$ |   $$ |  $$ |$$ |  $$ |$$    $$/ $$ | $$  |$$       |$$ |  $$ |\n");
+	printf("\t\t\t\t\t   $$/    $$/   $$/ $$/   $$/  $$$$$$/  $$/   $$/ $$$$$$$$/ $$/   $$/ \n");
 	
 }
 
@@ -42,7 +43,7 @@ typedef struct {
     char category[50];
     char description[100];
     float amount;
-    char username[50];  // New field to store the username associated with the record
+    char username[50];
 } Record;
 
 typedef struct {
@@ -55,7 +56,7 @@ Record records[MAX_RECORDS];
 int record_count = 0;
 int user_count = 0;
 int authenticated = 0;
-char logged_in_user[50];  // Store the username of the logged-in user
+char logged_in_user[50];
 
 void load_users();
 void save_users();
@@ -101,23 +102,53 @@ void save_users() {
     fclose(file);
 }
 
+// void load_records() {
+//     FILE *file = fopen("records.dat", "r");
+//     if (file != NULL) {
+//         while (fscanf(file, "%s\t%[^\t]\t%f\t%s", records[record_count].category, records[record_count].description, &records[record_count].amount, records[record_count].username) != EOF) {
+//             record_count++;
+//         }
+//         fclose(file);
+//     }
+// }
+
 void load_records() {
     FILE *file = fopen("records.dat", "r");
-    if (file != NULL) {
-        while (fscanf(file, "%s\t%[^\t]\t%f\t%s", records[record_count].category, records[record_count].description, &records[record_count].amount, records[record_count].username) != EOF) {
-            record_count++;
-        }
-        fclose(file);
+    if (file == NULL) {
+        printf("Error opening file for reading.\n");
+        return;
     }
+
+    record_count = 0; // Ensure record_count starts from 0
+
+    while (fscanf(file, "%[^\t]\t%[^\t]\t%f\t%[^\n]\n",
+                  records[record_count].category,
+                  records[record_count].description,
+                  &records[record_count].amount,
+                  records[record_count].username) != EOF) {
+        record_count++;
+    }
+
+    fclose(file);
+    printf("Records loaded successfully.\n");
 }
+
 
 void save_records() {
     FILE *file = fopen("records.dat", "w");
+    if (file == NULL) {
+        printf("Error opening file for writing.\n");
+        return;
+    }
+
     for (int i = 0; i < record_count; i++) {
         fprintf(file, "%s\t%s\t%.2f\t%s\n", records[i].category, records[i].description, records[i].amount, records[i].username);
     }
+
     fclose(file);
+    printf("Records saved successfully.\n");
 }
+
 
 void register_user() {
     if (user_count >= MAX_USERS) {
@@ -167,7 +198,7 @@ void authenticate_user() {
 
     for (int i = 0; i < user_count; i++) {
         if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password) == 0) {
-            strcpy(logged_in_user, username);  // Store the logged-in user's username
+            strcpy(logged_in_user, username);
             menu();
             authenticated = 1;
             return;
@@ -190,17 +221,17 @@ void add_record() {
         return;
     }
     printf("Enter category: ");
-    getchar(); // Consume newline left over by previous input
+    getchar(); 
     fgets(records[record_count].category, sizeof(records[record_count].category), stdin);
-    records[record_count].category[strcspn(records[record_count].category, "\n")] = 0;  // Remove newline
+    records[record_count].category[strcspn(records[record_count].category, "\n")] = 0;
 
     printf("Enter description: ");
     fgets(records[record_count].description, sizeof(records[record_count].description), stdin);
-    records[record_count].description[strcspn(records[record_count].description, "\n")] = 0;  // Remove newline
+    records[record_count].description[strcspn(records[record_count].description, "\n")] = 0;  
 
     printf("Enter amount: ");
     scanf("%f", &records[record_count].amount);
-    strcpy(records[record_count].username, logged_in_user);  // Assign the logged-in user to the record
+    strcpy(records[record_count].username, logged_in_user); 
 
     record_count++;
     save_records();
@@ -208,33 +239,51 @@ void add_record() {
 }
 void update_record() {
     char description[100];
+    char category[100];
+    int found = 0;
+
     printf("Enter the description of the record to update: ");
-    scanf(" %[^\n]", description);
+    getchar();
+    scanf("%[^\n]", description);
+
 
     for (int i = 0; i < record_count; i++) {
-        // Check if the record belongs to the logged-in user and matches the description
         if (strcmp(records[i].description, description) == 0 && strcmp(records[i].username, logged_in_user) == 0) {
+            found = 1;
+            printf("Record found. Enter new details:\n");
             printf("Enter new category: ");
-            scanf("%s", records[i].category);
+            getchar();
+            fgets(category, sizeof(category), stdin);
+            category[strcspn(category, "\n")] = '\0'; 
+            strcpy(records[i].category, category);
+
             printf("Enter new description: ");
-            scanf(" %[^\n]", records[i].description);
+            fgets(records[i].description, sizeof(records[i].description), stdin);
+            records[i].description[strcspn(records[i].description, "\n")] = '\0';
+
             printf("Enter new amount: ");
             scanf("%f", &records[i].amount);
 
+            // Update the record in the data file
             save_records();
+
             printf("Record updated successfully.\n");
-            return;
+            break;
         }
     }
-    printf("Record not found or does not belong to you.\n");
+
+    if (!found) {
+        printf("Record not found or does not belong to you.\n");
+    }
 }
+
 void delete_record() {
     char description[100];
     printf("Enter the description of the record to delete: ");
     scanf(" %[^\n]", description);
 
     for (int i = 0; i < record_count; i++) {
-        // Check if the record belongs to the logged-in user and matches the description
+        
         if (strcmp(records[i].description, description) == 0 && strcmp(records[i].username, logged_in_user) == 0) {
             for (int j = i; j < record_count - 1; j++) {
                 records[j] = records[j + 1];
@@ -269,22 +318,77 @@ void find_best_budget() {
     char categories[MAX_CATEGORIES][50] = {0};
     int category_count = 0;
 
+    // List of basic necessities
+    const char *necessities[] = {
+        "Groceries", "House rent", "Car EMI", "Transportation",
+        "Mobile Recharge", "Fastag Recharge", "Electricity Bills",
+        "Water Bills", "College Fees", "School Fees"
+    };
+    int necessity_count = sizeof(necessities) / sizeof(necessities[0]);
+
+    // List of slightly important expenses
+    const char *important_expenses[] = {
+        "TV", "Sofa", "Bed", "Tables", "Refrigerator",
+        "Oven", "Microwave", "Laptops", "Mobile", "Household Stuffs"
+    };
+    int important_count = sizeof(important_expenses) / sizeof(important_expenses[0]);
+
     for (int i = 0; i < record_count; i++) {
-        int found = 0;
-        for (int j = 0; j < category_count; j++) {
-            if (strcmp(categories[j], records[i].category) == 0) {
-                total[j] += records[i].amount;
-                found = 1;
-                break;
+        if (strcmp(records[i].username, logged_in_user) == 0) {
+            int found = 0;
+            for (int j = 0; j < category_count; j++) {
+                if (strcmp(categories[j], records[i].category) == 0) {
+                    total[j] += records[i].amount;
+                    found = 1;
+                    break;
+                }
             }
-        }
-        if (!found) {
-            strcpy(categories[category_count], records[i].category);
-            total[category_count] = records[i].amount;
-            category_count++;
+            if (!found) {
+                strcpy(categories[category_count], records[i].category);
+                total[category_count] = records[i].amount;
+                category_count++;
+            }
         }
     }
 
+    if (category_count == 0) {
+        printf("No spending records found for user %s.\n", logged_in_user);
+        return;
+    }
+
+    printf("Best Budget Plan for %s:\n", logged_in_user);
+
+    // Display basic necessities
+    printf("Basic Necessities:\n");
+    int found_necessities = 0;
+    for (int i = 0; i < category_count; i++) {
+        for (int j = 0; j < necessity_count; j++) {
+            if (strcmp(categories[i], necessities[j]) == 0) {
+                printf("- %s: %.2f\n", categories[i], total[i]);
+                found_necessities = 1;
+            }
+        }
+    }
+    if (!found_necessities) {
+        printf("No basic necessities found in your spending records.\n");
+    }
+
+    // Display slightly important expenses
+    printf("\nSlightly Important Expenses:\n");
+    int found_important = 0;
+    for (int i = 0; i < category_count; i++) {
+        for (int j = 0; j < important_count; j++) {
+            if (strcmp(categories[i], important_expenses[j]) == 0) {
+                printf("- %s: %.2f\n", categories[i], total[i]);
+                found_important = 1;
+            }
+        }
+    }
+    if (!found_important) {
+        printf("No slightly important expenses found in your spending records.\n");
+    }
+
+    // Finding the category with the lowest spending
     float min_amount = total[0];
     char best_category[50];
     strcpy(best_category, categories[0]);
@@ -296,8 +400,12 @@ void find_best_budget() {
         }
     }
 
-    printf("Category with the best budget (lowest spending): %s, Amount: %.2f\n", best_category, min_amount);
+    printf("\nCategory with the lowest spending: %s, Amount: %.2f\n", best_category, min_amount);
 }
+
+
+
+
 
 void menu() {
     int choice;
