@@ -5,7 +5,7 @@
 
 #define MAX_USERS 10
 #define MAX_RECORDS 100
-#define MAX_CATEGORIES 5
+#define MAX_CATEGORIES 20
 
 void clear_screen() {
     #ifdef _WIN32
@@ -101,16 +101,6 @@ void save_users() {
     }
     fclose(file);
 }
-
-// void load_records() {
-//     FILE *file = fopen("records.dat", "r");
-//     if (file != NULL) {
-//         while (fscanf(file, "%s\t%[^\t]\t%f\t%s", records[record_count].category, records[record_count].description, &records[record_count].amount, records[record_count].username) != EOF) {
-//             record_count++;
-//         }
-//         fclose(file);
-//     }
-// }
 
 void load_records() {
     FILE *file = fopen("records.dat", "r");
@@ -337,7 +327,7 @@ void find_best_budget() {
         if (strcmp(records[i].username, logged_in_user) == 0) {
             int found = 0;
             for (int j = 0; j < category_count; j++) {
-                if (strcmp(categories[j], records[i].category) == 0) {
+                if (strcasecmp(categories[j], records[i].category) == 0) {
                     total[j] += records[i].amount;
                     found = 1;
                     break;
@@ -363,7 +353,7 @@ void find_best_budget() {
     int found_necessities = 0;
     for (int i = 0; i < category_count; i++) {
         for (int j = 0; j < necessity_count; j++) {
-            if (strcmp(categories[i], necessities[j]) == 0) {
+            if (strcasecmp(categories[i], necessities[j]) == 0) {
                 printf("- %s: %.2f\n", categories[i], total[i]);
                 found_necessities = 1;
             }
@@ -378,7 +368,7 @@ void find_best_budget() {
     int found_important = 0;
     for (int i = 0; i < category_count; i++) {
         for (int j = 0; j < important_count; j++) {
-            if (strcmp(categories[i], important_expenses[j]) == 0) {
+            if (strcasecmp(categories[i], important_expenses[j]) == 0) {
                 printf("- %s: %.2f\n", categories[i], total[i]);
                 found_important = 1;
             }
@@ -400,12 +390,8 @@ void find_best_budget() {
         }
     }
 
-    printf("\nCategory with the lowest spending: %s, Amount: %.2f\n", best_category, min_amount);
+    printf("\nCategory with the lowest spending: %s (%.2f)\n", best_category, min_amount);
 }
-
-
-
-
 
 void menu() {
     int choice;
