@@ -24,17 +24,17 @@ git clone https://github.com/yourusername/expense-tracker.git
 
 2. Navigate to the project directory:
 ```bash
-cd expense-tracker
+cd BUDGET TRACKER
 ```
 
 3. Compile the program:
 ```bash
-gcc expense_tracker.c -o expense_tracker
+gcc index.c -o index
 ```
 
 4. Run the program:
 ```bash
-./expense_tracker
+./index
 ```
 
 ### Usage
