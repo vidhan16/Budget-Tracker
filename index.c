@@ -378,6 +378,32 @@ void find_best_budget() {
         printf("No slightly important expenses found in your spending records.\n");
     }
 
+    // Display luxury expenses
+    printf("\nLuxury Expenses:\n");
+    int found_luxury = 0;
+    for (int i = 0; i < category_count; i++) {
+        int is_necessity = 0, is_important = 0;
+        for (int j = 0; j < necessity_count; j++) {
+            if (strcasecmp(categories[i], necessities[j]) == 0) {
+                is_necessity = 1;
+                break;
+            }
+        }
+        for (int j = 0; j < important_count; j++) {
+            if (strcasecmp(categories[i], important_expenses[j]) == 0) {
+                is_important = 1;
+                break;
+            }
+        }
+        if (!is_necessity && !is_important) {
+            printf("- %s: %.2f\n", categories[i], total[i]);
+            found_luxury = 1;
+        }
+    }
+    if (!found_luxury) {
+        printf("No luxury expenses found in your spending records.\n");
+    }
+
     // Finding the category with the lowest spending
     float min_amount = total[0];
     char best_category[50];
