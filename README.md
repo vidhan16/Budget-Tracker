@@ -29,12 +29,21 @@ cd BUDGET TRACKER
 
 3. Compile the program:
 ```bash
-gcc index.c -o index
+gcc index.c -o index -L. lib_myLibrary.a
 ```
 
 4. Run the program:
 ```bash
 ./index
+```
+### Note : If you want to make any changes in library add this commands before compiling the index.c:
+
+```bash
+gcc -c user_management.c -o user_management
+```
+
+```bash
+ar rcs lib_myLibrary.a user_management   
 ```
 
 ### Usage
