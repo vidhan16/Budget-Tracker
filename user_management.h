@@ -1,6 +1,3 @@
-#ifndef USER_MANAGEMENT_H
-#define USER_MANAGEMENT_H
-
 #define MAX_USERS 100
 #define MAX_RECORDS 100
 #define MAX_CATEGORIES 20
@@ -38,5 +35,3 @@ void delete_record();
 void view_records();
 void find_best_budget();
 void menu();
-
-#endif // USER_MANAGEMENT_H
